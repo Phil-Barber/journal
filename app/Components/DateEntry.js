@@ -2,12 +2,26 @@ import React from 'react';
 import {Row, Col} from 'react-bootstrap';
 import ItemList from './ItemList';
 
+var sampleData = require('../sample-data');
+
 class DateEntry extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editing : null 
+    }
+  }
+
   render() {
     return (
       <div>
         {this.displayDate(this.props.date)}
-        <ItemList items={this.getItems()} />
+        <ItemList 
+          editing={this.state.editing}
+          items={this.getItems()} 
+          handleEditField={this.handleEditField.bind(this)}
+          toggleEditing={this.toggleEditing.bind(this)}
+        />
       </div>
     );
   }
@@ -41,8 +55,23 @@ class DateEntry extends React.Component {
     ][date.getDay()];
   }
 
+  toggleEditing(itemId) {
+    this.setState({editing : itemId});
+  }
+
+  handleEditField(event) {
+    if (event.keyCode === 13) {
+      this.toggleEditing(null);
+      this.updateItem({
+      });
+    }
+  }
+
   getItems() {
-    return ['hi', 'bye', 'hello', 'TWAT'];
+    return sampleData.items;
+  }
+
+  updateItem() {
   }
 }
 
