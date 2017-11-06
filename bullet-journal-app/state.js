@@ -1,12 +1,25 @@
 var state = {
     dateFocus : Date,
-    items : [
+    dateItems : {
+        Date : {
+            isFetching : false,
+            items : [{
+                _id : 0,
+                title : "example item",
+                body : "some more info",
+                parent : page
+            }]
+        }
+    },
+    pages : {
+        isFetching : false,
+        entries : [
         {
             _id : 0,
-            title : "example item",
-            dates : [Date, Date, Date],
-            parents : [page1, page2],
-            child : page3
+            title : "example page",
+            body : "Markdown text",
+            children : [item1, item2, page2]
         }
-    ]
+        ]
+    }
 }
