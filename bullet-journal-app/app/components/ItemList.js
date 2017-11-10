@@ -5,16 +5,19 @@ class ItemList extends React.Component {
   render() {
     return (
       <ul>
-        {this.props.items.map((item) => {
-          return this.renderOrEditItem(item)
-        })}
+        {this.props.items === undefined
+          ? []
+          : this.props.items.map((item) => {
+            return this.renderOrEditItem(item)
+          }
+        )}
       </ul>
     );
   }
 
   renderOrEditItem(item) {
     return (
-      (this.props.editing === item._id
+      (this.props.editing === item.id
         ? this.editItem(item)
         : this.renderItem(item)
       )
@@ -23,7 +26,7 @@ class ItemList extends React.Component {
 
   editItem(item) {
     return (
-      <li key={item._id} >
+      <li key={item.id} >
         <form>
           <label>
             item name
@@ -41,8 +44,8 @@ class ItemList extends React.Component {
   renderItem(item) {
     return (
       <li 
-        key={item._id}
-        onClick={() => this.props.toggleEditing(item._id)} 
+        key={item.id}
+        onClick={() => this.props.toggleEditing(item.id)}
       >
         {item.text}
       </li>

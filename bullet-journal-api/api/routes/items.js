@@ -3,13 +3,16 @@ const JSONStream = require('JSONStream');
 const router = express.Router();
 
 /* GET items */
-router.get('/', function(req, res, next) {
-    let items = req.db.get('items');
-    items.find({}, {}, (err, docs) => {
-        if (err) throw err;
-
-        res.json(docs);
-    });
+router.get('/', async function(req, res, next) {
+    try {
+        let client = req.db;
+        let result = await client.query("SELECT * FROM items");
+        res.json(JSON.stringify({
+            items : result.rows
+        }));
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 module.exports = router;

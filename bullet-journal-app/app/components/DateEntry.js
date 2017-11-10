@@ -1,25 +1,17 @@
 import React from 'react';
 import {Row, Col} from 'react-bootstrap';
 import ItemList from './ItemList';
-
-var sampleData = require('../sample-data');
+import { connect } from 'react-redux';
+import { toggleEditing, updateItem } from '../actions';
 
 class DateEntry extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editing : null 
-    }
-  }
-
   render() {
     return (
       <div>
         {this.displayDate(this.props.date)}
         <ItemList 
-          editing={this.state.editing}
-          items={this.getItems()} 
-          handleEditField={this.handleEditField.bind(this)}
+          editing={this.props.editItem}
+          items={this.props.items} 
           toggleEditing={this.toggleEditing.bind(this)}
         />
       </div>
@@ -56,23 +48,23 @@ class DateEntry extends React.Component {
   }
 
   toggleEditing(itemId) {
-    this.setState({editing : itemId});
+    this.props.dispatch(toggleEditing(itemId));
   }
 
   handleEditField(event) {
     if (event.keyCode === 13) {
       this.toggleEditing(null);
-      this.updateItem({
-      });
+      this.props.dispatch(updateItem(itemId));
     }
-  }
-
-  getItems() {
-    return sampleData.items;
   }
 
   updateItem() {
   }
 }
 
-export default DateEntry;
+function mapStateToProps(state) {
+  const { editItem } = state;
+  return { editItem }
+}
+
+export default connect(mapStateToProps)(DateEntry);

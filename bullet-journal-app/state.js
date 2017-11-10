@@ -1,14 +1,17 @@
 var state = {
     dateFocus : Date,
+    editItem : id,
     dateItems : {
-        Date : {
-            isFetching : false,
-            items : [{
-                _id : 0,
-                title : "example item",
-                body : "some more info",
-                parent : page
-            }]
+        isFetching : false,
+        entriesByDate : {
+            Date : {
+                items : [{
+                    _id : 0,
+                    title : "example item",
+                    body : "some more info",
+                    parent : page
+                }]
+            }
         }
     },
     pages : {

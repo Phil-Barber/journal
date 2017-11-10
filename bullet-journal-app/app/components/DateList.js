@@ -7,7 +7,14 @@ class DateList extends React.Component {
     return (
       <div>
         {this.getDates().map((date, index) => {
-            return <DateEntry key={index} date={date} />
+          return (
+            <DateEntry 
+              key={index} 
+              date={date} 
+              items={this.props.items[date.toDateString()]}
+              rows={this.props.entryRows}
+            />
+          );
         })}
       </div>
     );
@@ -26,8 +33,6 @@ class DateList extends React.Component {
       } else if (agg === 'monthly') {
         entry.setMonth(entry.getMonth() + i);
       }
-      //else if (agg === 'yearly');h
-      // else if ( hourly) 
 
       dates.push(entry);
     }

@@ -1,16 +1,16 @@
 const express = require('express')
 const app = express()
 const cors = require('cors');
-const db = require('monk')('localhost:27017/BulletJournal');
+const { Client } = require('pg');
 
 const items = require('./routes/items.js');
+const connectionDetails = require('../config/db-connection');
 
-const sampleData = require('./sample-data.js');
-
-//loadData(sampleData, db);
+const client = new Client(connectionDetails);
+client.connect();
 
 app.use(function (req, res, next) {
-    req.db = db;
+    req.db = client;
     next();
 });
 
@@ -42,15 +42,3 @@ app.listen(3000, function () {
   console.log('Example app listening on port 3000!')
 });
 
-
-function loadData(data, db) {
-    let collection = db.get('items');
-    collection.insert(data.items).then( (docs) => {
-        console.log("writing");
-        console.log(docs);
-    }).catch((err) => console.log(err));
-    collection.find({}, {}, (err, docs) => {
-        console.log('reading');
-        console.log(docs);
-    });
-}
